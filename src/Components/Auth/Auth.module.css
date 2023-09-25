@@ -1,0 +1,43 @@
+.loginForm {
+    max-width: 400px;
+    padding: 20px 20px 24px;
+    border-radius: 25px;
+    box-shadow: 4px 4px 28px 12px rgba(34, 60, 80, 0.22);
+    & p {
+        font-weight: 500;
+        color: #434343;
+        font-size: 24px;
+    }
+}
+
+.success__msg {
+    color: green;
+}
+
+
+
+.form__auth {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    row-gap: 20px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(120, 113, 113, 0.331);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+}
+
+.toRegister {
+    padding-top: 8px;
+    font-weight: 700;
+    color: #434343;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    column-gap: 4px;
+}

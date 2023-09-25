@@ -1,0 +1,10 @@
+.MyLink {
+    cursor: pointer;
+    border-radius: 25px;
+    text-align: center;
+    transition: .3s all;
+
+    &:hover {
+        transform: scale(0.95);
+    }
+}
