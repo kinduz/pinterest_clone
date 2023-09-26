@@ -19,7 +19,9 @@ import UserInfo from "../UserInfo/UserInfo";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Header = () => {
-  const userId = localStorage.getItem("id")
+
+  const [userId, setUserId] = useState(null);
+
 
   const dispatch = useDispatch();
   const location = useLocation();
@@ -42,16 +44,18 @@ const Header = () => {
   useEffect(() => {
     if (posts) dispatch(setPostsAction(posts))  
     if (users) {
-      const currentUser = users.find(user => user.email === email)
-      if (currentUser) {
-        setCurrentUser(currentUser)
-        localStorage.setItem("id", currentUser.id)
+      const currentProfile = users.find(user => user.email === email)
+      if (currentProfile) {
+        localStorage.setItem("id", currentProfile.id)
+        setUserId(localStorage.getItem("id"))
+        setCurrentUser(currentProfile)
       }
     }
     if (location.pathname === '/posts') {
       dispatch(setSectionAction("main"))
     }
   }, [posts, users, location])
+
 
   useEffect(() => {
     const loadingData = async () => {
@@ -71,6 +75,8 @@ const Header = () => {
     navigate("/posts", {replace: true})
     dispatch(setSearchValueAction(searchValue.trim()))
   }
+
+
 
   return (
     <nav className={cl.navbar}>

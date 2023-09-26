@@ -29,20 +29,23 @@ const RegistrationForm = () => {
   const addNewUserDb = async (userName, userEmail, imgUrl = null) => {
     try {
       const usersRef = collection(db, "users");
-      const q = query(usersRef, where("email", "==", userEmail ? userEmail : email));
+      const q = query(
+        usersRef,
+        where("email", "==", userEmail ? userEmail : email)
+      );
       const querySnapshot = await getDocs(q);
       if (querySnapshot.size === 0) {
         const docRef = await addDoc(usersRef, {
           name: userName ? userName : name,
           email: userEmail ? userEmail : email,
           born: date ? date : null,
-          imgUrl: imgUrl
+          imgUrl: imgUrl,
         });
-      }
+    }
     } catch (e) {
       console.error();
     }
-  }
+  };
 
   const submitForm = (e) => {
     e.preventDefault()
@@ -57,8 +60,8 @@ const RegistrationForm = () => {
           displayName: name,
         })
         setMsg("Регистрация прошла успешно")
-        addNewUserDb()
         dispatch(registrationAction(user.email, name, user.accessToken, user.uid))
+        addNewUserDb()
       })
       .catch((error) => {
         setMsg('')
@@ -66,7 +69,16 @@ const RegistrationForm = () => {
       })
   }
 
+  const resetParams = () => {
+    setEmail("")
+    setPassword("")
+    setConfirmPassword("")
+    setDate("")
+    setName("")
+  }
+
   const googleAuth = () => {
+    resetParams()
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
@@ -97,7 +109,7 @@ const RegistrationForm = () => {
             )}
             <form className={cl.form} onSubmit={(e) => submitForm(e)}>
               <MyInput label="Введите ваше имя" type="text" required={true} changeFunc={(value) => setName(value)}/>
-              <MyInput label="Адрес электронной почты" type="text" required={true} changeFunc={(value) => setEmail(value)}/>
+              <MyInput label="Адрес электронной почты" type="email" required={true} changeFunc={(value) => setEmail(value)}/>
               <MyInput label="Создайте пароль" type="password" required={true} changeFunc={(value) => setPassword(value)}/>
               <MyInput label="Подтвердите пароль" type="password" required={true} changeFunc={(value) => setConfirmPassword(value)}/>
               <MyInput label="Дата рождения" type="date" required={true} changeFunc={(value) => setDate(value)}/>

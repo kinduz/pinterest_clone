@@ -58,7 +58,7 @@ const LoginForm = () => {
           <h2 className='error__msg'>{errorMsg}</h2>
         )}
         <form className={cl.form} onSubmit={(e) => submitForm(e)}>
-          <MyInput label="Адрес электронной почты" type="text" required={true} changeFunc={(value) => setEmail(value)}/>
+          <MyInput label="Адрес электронной почты" type="email" required={true} changeFunc={(value) => setEmail(value)}/>
           <MyInput label="Пароль" type="password" required={true} changeFunc={(value) => setPassword(value)}/>
           <MyButton text="Войти" textColor="white" backColor="red" />
         </form>
