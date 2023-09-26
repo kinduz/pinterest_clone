@@ -26,7 +26,15 @@ const MakePin = () => {
 
   const handleInput = (e) => {
     e.preventDefault();
-    setInputFile(e.target.files[0]);
+    const file = e.target.files[0];
+    if (file.type.slice(0, 5) !== "image" || file === 'undefined') {
+      setErrorMsg("Пинами могут быть только изображения")
+      return
+    }
+    else {
+      setErrorMsg('')
+      setInputFile(file);
+    }
   };
 
   useEffect(() => {
@@ -108,6 +116,7 @@ const MakePin = () => {
                 type="file"
                 className="input__make"
                 draggable
+                accept='.jpg, .png, .webp, .svg, .jpeg'
               />
               <div className="upload__drag flex__column__center">
                 <BsFillArrowUpCircleFill />

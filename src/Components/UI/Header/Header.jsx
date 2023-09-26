@@ -56,6 +56,18 @@ const Header = () => {
     }
   }, [posts, users, location])
 
+  useEffect(() => {
+    if (location.pathname === '/posts') {
+      dispatch(setSectionAction("main"))
+    }
+    else {
+      setSearchValue("")
+      dispatch(setSearchValueAction(""))
+    }
+
+  }, [location.pathname])
+
+
 
   useEffect(() => {
     const loadingData = async () => {

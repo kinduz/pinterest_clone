@@ -9,11 +9,8 @@ import PostList from "../Components/UI/PostList/PostList";
 import Modal from "../Components/Modal/Modal";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
-import { getAuth, updateProfile } from "firebase/auth";
 
 const CurrentUser = () => {
-  const auth = getAuth();
-
   const params = useParams();
   const email = localStorage.getItem("email");
 
@@ -43,12 +40,6 @@ const CurrentUser = () => {
     }
     if (fileData) {
       try {
-        const user = auth.currentUser;
-
-        updateProfile(user, {
-          photoURL: fileData,
-        })
-
         updateDoc(doc(db, "users", currentUser.id), {
           imgUrl: fileData,
         }).then(() => {
@@ -122,11 +113,13 @@ const CurrentUser = () => {
             )}
           </div>
           <div className="posts__text">
-            {currentUser.email === email ? (
+            {currentUserPosts.length ?
+            currentUser.email === email ? (
               <h1>Ваши пины, {currentUser.name}</h1>
             ) : (
               <h1>Пины пользователя {currentUser.name}</h1>
-            )}
+            ) : ''
+            }
           </div>
           <div className="user__posts">
             {currentUserPosts.length ? (

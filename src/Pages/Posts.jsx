@@ -3,6 +3,7 @@ import Loading from "../images/loading.svg";
 import PostList from "../Components/UI/PostList/PostList";
 import { useSelector } from "react-redux";
 import {MdOutlineSort} from 'react-icons/md'
+import { useHandleClick } from "../hooks/useHandleClick";
 
 const Posts = () => {
   const posts = useSelector(state => state.posts.posts)
@@ -39,6 +40,8 @@ const Posts = () => {
     }
   }, [searchValue])
 
+  useHandleClick(isSortList, setIsSortList)
+
   return (
     <div className="posts__content flex__row">
       {isLoading ? (
@@ -50,7 +53,7 @@ const Posts = () => {
           <div className="posts__params">
             <h2 className="available__pins">Всего доступных пинов: {foundPosts ? foundPosts.length : posts.length}</h2>
             {foundPosts ? foundPosts.length > 1 : posts.length > 1 && 
-            <div className="sort__icon" onClick={() => setIsSortList(!isSortList)}>
+            <div className="sort__icon" onClick={(e) => {setIsSortList(!isSortList); e.stopPropagation()}}>
               <MdOutlineSort/>
               {isSortList && (
                 <div className="sort__list" onClick={(e) => e.stopPropagation()}>
