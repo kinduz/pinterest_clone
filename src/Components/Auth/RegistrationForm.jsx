@@ -4,7 +4,7 @@ import cl from "./Auth.module.css";
 import { ImImages } from "react-icons/im";
 import { FcGoogle } from "react-icons/fc";
 import MyLink from "../UI/Link/MyLink";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getAuth, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore"; 
@@ -26,6 +26,10 @@ const RegistrationForm = () => {
 
   const errorMsg = useMsgConverter(error);
 
+  useEffect(() => {
+    document.title = 'Регистрация'
+  }, [])
+
   const addNewUserDb = async (userName, userEmail, imgUrl = null) => {
     try {
       const usersRef = collection(db, "users");
@@ -40,6 +44,8 @@ const RegistrationForm = () => {
           email: userEmail ? userEmail : email,
           born: date ? date : null,
           imgUrl: imgUrl,
+          description: null,
+          backgroundImgUrl: null,
         });
     }
     } catch (e) {

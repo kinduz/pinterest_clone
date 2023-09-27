@@ -47,12 +47,14 @@ const Header = () => {
       const currentProfile = users.find(user => user.email === email)
       if (currentProfile) {
         localStorage.setItem("id", currentProfile.id)
+        localStorage.removeItem("imgUrl")
+        localStorage.setItem("imgUrl", currentProfile.imgUrl)
         setUserId(localStorage.getItem("id"))
         setCurrentUser(currentProfile)
       }
     }
-    if (location.pathname === '/posts') {
-      dispatch(setSectionAction("main"))
+    if (location.pathname != '/posts') {
+      dispatch(setSectionAction("another"))
     }
   }, [posts, users, location])
 

@@ -357,7 +357,10 @@ input[type='file'] {
     justify-content: center;
     flex-direction: column;
     row-gap: 48px;
-    margin-top: 64px;
+    /* margin-top: 280px; */
+    /* margin-top: 60px; */
+
+    position: relative;
 }
 
 .user__info, .info__main {
@@ -368,8 +371,22 @@ input[type='file'] {
     row-gap: 8px; 
 }
 
+.background__img {
+    position: absolute;
+    top: 96px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 640px;
+    height: 320px;
+    & img {
+        border-radius: 25px;
+        width: 100%;
+        height: 100%;
+    }
+}
+
 .user__info {
-    row-gap: 24px;
+    row-gap: 12px;
 }
 
 .user__btns {
@@ -382,7 +399,16 @@ input[type='file'] {
     color: #787171;
 }
 
+.description__user {
+    font-style: italic;
+    font-weight: 500;
+    max-width: 640px;
+    text-align: center;
+}
+
 .upload__img {
+    display: flex;
+    column-gap: 8px;
     position: relative;
     & input {
         font-size: 0;

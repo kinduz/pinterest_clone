@@ -14,7 +14,6 @@ import { AiFillEdit } from "react-icons/ai";
 const CurrentPost = () => {
   const navigate = useNavigate()
 
-
   const params = useParams();
   const posts = useSelector((state) => state.posts.posts);
   const email = localStorage.getItem("email")
@@ -31,6 +30,7 @@ const CurrentPost = () => {
 
   useEffect(() => {
     if (users && postId) {
+      document.title = postId.title;
       setUserPost(users.find(user => user.email === postId.authorEmail))
     }
   }, [users, postId])

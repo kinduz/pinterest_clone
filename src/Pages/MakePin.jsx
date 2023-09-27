@@ -24,6 +24,10 @@ const MakePin = () => {
   const [isLoadingPost, setIsLoadingPost] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
 
+  useEffect(() => {
+    document.title = 'Создать пост';
+  }, [])
+
   const handleInput = (e) => {
     e.preventDefault();
     const file = e.target.files[0];

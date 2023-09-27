@@ -23,11 +23,18 @@ const CurrentUser = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const [inputFile, setInputFile] = useState(null);
+  const [inputFileBackground, setInputFileBackground] = useState(null);
   const [fileData, setFileData] = useState(null);
+  const [fileDataBackground, setFileDataBackground] = useState(null);
 
   const handleInput = (e) => {
     e.preventDefault();
     setInputFile(e.target.files[0]);
+  };
+
+  const handleInputBackground = (e) => {
+    e.preventDefault();
+    setInputFileBackground(e.target.files[0]);
   };
 
   useEffect(() => {
@@ -54,6 +61,29 @@ const CurrentUser = () => {
   }, [inputFile, fileData]);
 
   useEffect(() => {
+    if (inputFileBackground) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setFileDataBackground(reader.result); 
+      };
+      reader.readAsDataURL(inputFileBackground);
+    }
+    if (fileDataBackground) {
+      try {
+        updateDoc(doc(db, "users", currentUser.id), {
+          backgroundImgUrl: fileDataBackground,
+        }).then(() => {
+          localStorage.removeItem("imgUrl");
+          localStorage.setItem("imgUrl", fileData);
+          window.location.reload()
+        });
+      } catch (e) {
+        console.error();
+      }
+    }
+  }, [inputFileBackground, fileDataBackground]);
+
+  useEffect(() => {
     if (users) {
       const foundUser = users.find((user) => user.id === params.id);
       if (foundUser) {
@@ -64,6 +94,7 @@ const CurrentUser = () => {
 
   useEffect(() => {
     if (currentUser) {
+      document.title = currentUser.name;
       const foundPosts = posts?.filter(
         (post) => post.authorEmail === currentUser.email
       );
@@ -81,64 +112,93 @@ const CurrentUser = () => {
       ) : !currentUser ? (
         <h1>Такого пользователя не существует</h1>
       ) : (
-        <div className="user__main">
-          <div className="user__info">
-            <div className="info__main">
-              <UserInfo
-                isSkipImg={true}
-                flexColumn={true}
-                userImg={currentUser.imgUrl}
-                userName={currentUser.name}
-                widthHeightImg="128px"
-                spanFz="32px"
-              />
-              <span className="tag__user">@{currentUser.id}</span>
+        <>
+          {currentUser.backgroundImgUrl && (
+            <div className="background__img">
+              <img src={currentUser.backgroundImgUrl} alt="" />
             </div>
-            {currentUser.email === email && (
-              <div className="user__btns">
-                <MyButton
-                  text="Изменить имя"
-                  clickFunction={() => setIsModal(true)}
-                />
-                <div className="upload__img">
-                  <MyButton text="Обновить фото" />
-                  <input
-                    onChange={(e) => handleInput(e)}
-                    type="file"
-                    className="input__make"
-                    title=" "
+          )}
+          <div className="user__main" style={{marginTop: currentUser.backgroundImgUrl ? '280px' : '60px'}}>
+            <div className="user__info">
+              <div className="info__main">
+                <div className="user__info">
+                  <UserInfo
+                    isSkipImg={true}
+                    flexColumn={true}
+                    userImg={currentUser.imgUrl}
+                    userName={currentUser.name}
+                    widthHeightImg="128px"
+                    spanFz="32px"
                   />
+                  <span className="tag__user">@{currentUser.id}</span>
+                  {currentUser.description && (
+                    <span className="description__user">
+                      {currentUser.description}
+                    </span>
+                  )}
                 </div>
               </div>
+              {currentUser.email === email && (
+                <div className="user__btns">
+                  <MyButton
+                    text="Изменить данные"
+                    clickFunction={() => setIsModal(true)}
+                  />
+                  <div className="upload__img">
+                    <div className="upload__avatar">
+                      <MyButton text="Обновить фото" />
+                      <input
+                        onChange={(e) => handleInput(e)}
+                        type="file"
+                        className="input__make"
+                        title=" "
+                      />
+                    </div>
+                    <div className="upload__background">
+                      <MyButton text="Обновить фон" />
+                      <input
+                        onChange={(e) => handleInputBackground(e)}
+                        type="file"
+                        className="input__make"
+                        title=" "
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="posts__text">
+              {currentUserPosts.length ? (
+                currentUser.email === email ? (
+                  <h1>Ваши пины, {currentUser.name}</h1>
+                ) : (
+                  <h1>Пины пользователя {currentUser.name}</h1>
+                )
+              ) : (
+                ""
+              )}
+            </div>
+            <div className="user__posts">
+              {currentUserPosts.length ? (
+                <PostList postsArray={currentUserPosts} />
+              ) : (
+                <div className="make__post">
+                  <span>Похоже, у вас нет ни одного пина :(</span>
+                  <span>Давайте создадим ваш первый пин!</span>
+                  <MyLink
+                    backColor="#FFF"
+                    color="red"
+                    linkTo="/make-pin"
+                    text="Создать пин"
+                  />
+                </div>
+              )}
+            </div>
+            {isModal && (
+              <Modal currentUser={currentUser} setIsModal={setIsModal} />
             )}
           </div>
-          <div className="posts__text">
-            {currentUserPosts.length ?
-            currentUser.email === email ? (
-              <h1>Ваши пины, {currentUser.name}</h1>
-            ) : (
-              <h1>Пины пользователя {currentUser.name}</h1>
-            ) : ''
-            }
-          </div>
-          <div className="user__posts">
-            {currentUserPosts.length ? (
-              <PostList postsArray={currentUserPosts} />
-            ) : (
-              <div className="make__post">
-                <span>Похоже, у вас нет ни одного пина :(</span>
-                <span>Давайте создадим ваш первый пин!</span>
-                <MyLink
-                  backColor="#FFF"
-                  color="red"
-                  linkTo="/make-pin"
-                  text="Создать пин"
-                />
-              </div>
-            )}
-          </div>
-          {isModal && <Modal currentUser={currentUser} setIsModal={setIsModal} />}
-        </div>
+        </>
       )}
     </div>
   );

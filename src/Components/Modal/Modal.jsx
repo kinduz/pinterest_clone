@@ -11,6 +11,7 @@ const Modal = ({ setIsModal, currentUser }) => {
   const auth = getAuth();
   const [msg, setMsg] = useState('')
   const [newName, setNewName] = useState('')
+  const [newDescription, setNewDescription] = useState('')
 
   const updateNameUser = async (e) => {
     e.preventDefault();
@@ -42,6 +43,29 @@ const Modal = ({ setIsModal, currentUser }) => {
   
   };
 
+  const updateDescriptionUser = async (e) => {
+    e.preventDefault();
+    try {
+      const user = auth.currentUser;
+      if (user) {
+
+      await updateDoc(doc(db, "users", currentUser.id), {
+        description: newDescription ? newDescription : currentUser.description,
+      })
+        .then(() => {
+          setMsg("Описание пользователя успешно изменено");
+          window.location.reload();
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+      }
+    } catch (e) {
+      console.error();
+    }
+  
+  };
+
   return (
     <div className={cl.modal} onClick={() => setIsModal(false)}>
       <div className={cl.modal__content} onClick={(e) => e.stopPropagation()}>
@@ -53,6 +77,11 @@ const Modal = ({ setIsModal, currentUser }) => {
             <span>Введите новое имя</span>
             <MyInput label='Новое имя' changeFunc={(value) => setNewName(value)}/>
             <MyButton text="Обновить" clickFunction={(e) => updateNameUser(e)}/>
+          </form>
+          <form onSubmit={(e) => updateDescriptionUser(e)} className={`${cl.form__name} ${cl.modal__form}`}>
+            <span>Введите новое описание</span>
+            <MyInput label='Новое описание' changeFunc={(value) => setNewDescription(value)}/>
+            <MyButton text="Обновить" clickFunction={(e) => updateDescriptionUser(e)}/>
           </form>
         </div>
         {msg && (

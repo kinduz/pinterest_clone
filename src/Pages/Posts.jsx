@@ -31,6 +31,7 @@ const Posts = () => {
   }, [posts]);
 
   useEffect(() => {
+    document.title = 'Посты'
     if (searchValue) {
       const foundedPosts = posts.filter(post => post.title.includes(searchValue) || post.description.includes(searchValue) || post.author.includes(searchValue))
       setFoundPosts(foundedPosts)

@@ -4,7 +4,7 @@ import cl from "./Auth.module.css";
 import { ImImages } from "react-icons/im";
 import { FcGoogle } from "react-icons/fc";
 import MyLink from "../UI/Link/MyLink";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginAction } from "../../store/Reducers/AuthReducer";
 import { GoogleAuthProvider, getAuth, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
@@ -18,6 +18,10 @@ const LoginForm = () => {
   const [error, setError] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  useEffect(() => {
+    document.title = 'Авторизация'
+  }, [])
 
   const submitForm = (e) => {
     e.preventDefault()
