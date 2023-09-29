@@ -48,8 +48,25 @@
     align-items: start;
 }
 
+.menu__sections {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    gap: 16px;
+}
+
+.buttons__sections {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+}
+
 .user__info {
     margin-top: 32px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 900px) {

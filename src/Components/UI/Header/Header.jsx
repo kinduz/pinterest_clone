@@ -24,7 +24,7 @@ import {
 } from "../../../store/Reducers/postsReducer";
 import UserInfo from "../UserInfo/UserInfo";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { RxHamburgerMenu } from 'react-icons/rx'
+import { RxHamburgerMenu } from "react-icons/rx";
 
 const Header = () => {
   const [userId, setUserId] = useState(null);
@@ -42,7 +42,7 @@ const Header = () => {
   const [formIsClick, setFormIsClick] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [currentUser, setCurrentUser] = useState("");
-  const [isBurgerMenu, setIsBurgerMenu] = useState(false)
+  const [isBurgerMenu, setIsBurgerMenu] = useState(false);
 
   useHandleClick(formIsClick, setFormIsClick);
   useHandleClick(isDropped, setIsDropped);
@@ -78,13 +78,12 @@ const Header = () => {
 
   useEffect(() => {
     if (isBurgerMenu === true) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
     }
-    else {
-      document.body.style.overflow = 'auto';
-    }
-    dispatch(setBurgerMenuAction())
-  }, [isBurgerMenu])
+    dispatch(setBurgerMenuAction());
+  }, [isBurgerMenu]);
 
   useEffect(() => {
     const loadingData = async () => {
@@ -101,14 +100,14 @@ const Header = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setIsBurgerMenu(false)
+    setIsBurgerMenu(false);
     navigate("/posts", { replace: true });
     dispatch(setSearchValueAction(searchValue.trim()));
   };
 
   const setBurgerMenu = () => {
-    setIsBurgerMenu(!isBurgerMenu)
-  }
+    setIsBurgerMenu(!isBurgerMenu);
+  };
 
   return (
     <nav className={cl.navbar}>
@@ -187,53 +186,77 @@ const Header = () => {
         </Link>
       </div>
       <div className={cl.burger__menu} onClick={setBurgerMenu}>
-        <RxHamburgerMenu/>
-        {isBurgerMenu && 
-        <div className={cl.burger__content} onClick={(e) => e.stopPropagation()}>
-          <div className={cl.burger__close} onClick={setBurgerMenu}>
-            <AiOutlineClose/>
-          </div>
-          <div className={cl.burger__sections}>
-            <form
-            action=""
-            className={cl.form}
-            onClick={(e) => {
-              setFormIsClick(true);
-              e.stopPropagation();
-            }}
-            onSubmit={(e) => handleSearch(e)}
+        <RxHamburgerMenu />
+        {isBurgerMenu && (
+          <div
+            className={cl.burger__content}
+            onClick={(e) => e.stopPropagation()}
           >
-            <div className={cl.form__icon}>
-              <FiSearch />
+            <div className={cl.burger__close} onClick={setBurgerMenu}>
+              <AiOutlineClose />
             </div>
-            <MyInput
-              changeFunc={(value) => setSearchValue(value)}
-              label="Поиск"
-              required={false}
-              value={searchValue}
-              type="text"
-            />
-            </form>
-            <MyLink
-              text="Главная"
-              linkTo="/posts"
-              clickFunction={() => {setIsBurgerMenu(false); dispatch(setSectionAction("main"))}}
-            />
-            <MyLink
-                text="Создать пин"
-                linkTo="make-pin"
-                clickFunction={() => {setIsBurgerMenu(false); dispatch(setSectionAction("make-pin"))}}
-            />
-            <div className={cl.user__info} onClick={() => setIsBurgerMenu(false)}>
-              <UserInfo userImg={currentUser.imgUrl} />
+            <div className={cl.burger__sections}>
+              <form
+                action=""
+                className={cl.form}
+                onClick={(e) => {
+                  setFormIsClick(true);
+                  e.stopPropagation();
+                }}
+                onSubmit={(e) => handleSearch(e)}
+              >
+                <div className={cl.form__icon}>
+                  <FiSearch />
+                </div>
+                <MyInput
+                  changeFunc={(value) => setSearchValue(value)}
+                  label="Поиск"
+                  required={false}
+                  value={searchValue}
+                  type="text"
+                />
+              </form>
+              <div className={cl.menu__sections}>
+                <div className={cl.buttons__sections}>
+                  <MyLink
+                    text="Главная"
+                    linkTo="/posts"
+                    clickFunction={() => {
+                      setIsBurgerMenu(false);
+                      dispatch(setSectionAction("main"));
+                    }}
+                  />
+                  <MyLink
+                    text="Создать пин"
+                    linkTo="make-pin"
+                    clickFunction={() => {
+                      setIsBurgerMenu(false);
+                      dispatch(setSectionAction("make-pin"));
+                    }}
+                  />
+                </div>
+
+                <Link
+                  to={`user/${userId}`}
+                  className={cl.user__info}
+                  onClick={() => {
+                    setIsBurgerMenu(false);
+                    dispatch(setSectionAction("profile"));
+                  }}
+                >
+                  <UserInfo userImg={currentUser.imgUrl} />
+                </Link>
+                <MyButton
+                  text="Выйти"
+                  clickFunction={() => {
+                    setIsBurgerMenu(false);
+                    dispatch(logoutAction());
+                  }}
+                />
+              </div>
             </div>
-            <MyButton
-            text="Выйти"
-            clickFunction={() => {setIsBurgerMenu(false); dispatch(logoutAction())}}
-          />
           </div>
-        </div>
-        }
+        )}
       </div>
     </nav>
   );
