@@ -3,10 +3,73 @@
     background: rgb(255, 255, 255);
     box-shadow: 4px 4px 20px 7px rgba(34, 60, 80, 0.17);
     display: flex;
-    justify-content: space-between;
     column-gap: 24px;
     align-items: center;
     padding: 0 32px;
+}
+
+.all__sections {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.burger__menu {
+    display: none;
+    font-size: 32px;
+    cursor: pointer;
+}
+
+.burger__content {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    background: #FFF;
+}
+
+.burger__close {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    color: #000;
+    cursor: pointer;
+}
+
+.burger__sections {
+    cursor: default;
+    padding: 0 16px;
+    margin-top: 64px;
+    display: flex;
+    row-gap: 8px;
+    flex-direction: column;
+    align-items: start;
+}
+
+.user__info {
+    margin-top: 32px;
+}
+
+@media screen and (max-width: 900px) {
+    .navbar {
+        justify-content: space-between;
+    }
+    .all__sections {
+        display: none;
+    }
+    .burger__menu {
+        display: block;
+    }
+    .form {
+        width: 100% !important;
+        & input {
+            width: 100%;
+            cursor: text;
+        }
+        margin-bottom: 32px;
+    }
 }
 
 .sections__group {
@@ -15,6 +78,8 @@
     column-gap: 32px;
     align-items: center;
 }
+
+
 
 .profile__block {
     font-size: 20px;
@@ -62,7 +127,7 @@
 
 .form {
     position: relative;
-    width: 80%;
+    width: 70%;
     & input {
         margin-left: 32px;
         font-size: 20px;

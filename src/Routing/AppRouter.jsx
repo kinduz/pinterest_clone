@@ -10,6 +10,7 @@ const AppRouter = () => {
   return email ? (
     <div className="content">
       <Header/>
+      <div className="main__content">
       <Routes>
         {privateRoutes.map((route) => (
           <Route
@@ -22,6 +23,8 @@ const AppRouter = () => {
         <Route path="/*" element={<Navigate to="/posts" />} />
 
       </Routes>
+      </div>
+
     </div>
   ) : (
     <Routes>
