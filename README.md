@@ -14,7 +14,11 @@ npm i
 npm start
 ```
 
-<p align='center'>
-   <img src="https://github.com/KindUz/pinterest_clone/assets/66213277/59c8e626-38d8-4592-9f57-32d308fd1676" alt="Главная" width="600" height='600'/>
-</p>
+<div display='flex' flex-wrap='wrap'>
+   <img src="https://github.com/KindUz/pinterest_clone/assets/66213277/59c8e626-38d8-4592-9f57-32d308fd1676" alt="Главная" width="600" height='800'/>
+    <img src="https://github.com/KindUz/pinterest_clone/assets/66213277/59c8e626-38d8-4592-9f57-32d308fd1676" alt="Главная" width="600" height='800'/>
+    <img src="https://github.com/KindUz/pinterest_clone/assets/66213277/59c8e626-38d8-4592-9f57-32d308fd1676" alt="Главная" width="600" height='800'/>
+    <img src="https://github.com/KindUz/pinterest_clone/assets/66213277/59c8e626-38d8-4592-9f57-32d308fd1676" alt="Главная" width="600" height='800'/>
+    <img src="https://github.com/KindUz/pinterest_clone/assets/66213277/59c8e626-38d8-4592-9f57-32d308fd1676" alt="Главная" width="600" height='800'/>
+</div>
 
