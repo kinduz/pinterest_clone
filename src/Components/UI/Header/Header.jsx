@@ -77,6 +77,12 @@ const Header = () => {
   }, [location.pathname]);
 
   useEffect(() => {
+    if (isBurgerMenu === true) {
+      document.body.style.overflow = 'hidden';
+    }
+    else {
+      document.body.style.overflow = 'auto';
+    }
     dispatch(setBurgerMenuAction())
   }, [isBurgerMenu])
 

@@ -435,8 +435,11 @@ input[type='file'] {
 
 @media screen and (max-width: 500px) {
     .background__img {
-        width: 320px;
+        width: 340px;
         height: 200px;
+    }
+    .user__main {
+        margin-top: 200px !important;
     }
 }
 
